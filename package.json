@@ -12,6 +12,7 @@
     "build": "electron-packager . renamer --prune=true --ignore=node_modules/electron-* --out=release-builds"
   },
   "dependencies": {
+    "languagedetect": "^1.2.0",
     "pdf-textstring": "0.0.7"
   }
 }

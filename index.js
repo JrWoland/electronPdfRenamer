@@ -2,12 +2,13 @@
     // Electron variables
     const fs = require('fs'),
         path = require('path'),
-        dialog = require('electron').remote.dialog;
+        dialog = require('electron').remote.dialog,
+        LanguageDetect = require('languagedetect');
 
     let pdftext = require('pdf-textstring'),
         AbsolutePathToApp = path.dirname(process.mainModule.filename),
-        pathToPdftotext = AbsolutePathToApp + "/bin/pdftotext.exe",
-        pathToPdffonts = AbsolutePathToApp + "/bin/pdffonts.exe";
+        pathToPdftotext = AbsolutePathToApp + '/bin/pdftotext.exe',
+        pathToPdffonts = AbsolutePathToApp + '/bin/pdffonts.exe';
     pdftext.setBinaryPath_PdfToText(pathToPdftotext);
     pdftext.setBinaryPath_PdfFont(pathToPdffonts);
 
@@ -27,13 +28,21 @@
     function generateCsvFile() {
         fs.writeFile(`${filePath}\\list.csv`, fileList, (err) => {
             if (err) {
-                alert("An error ocurred updating the file" + err.message);
+                alert('An error ocurred updating the file' + err.message);
                 console.log(err);
                 return;
             }
             alert(`The file has been succesfully saved: ${filePath}`);
         });
     }
+    function detectLanguage(text) {
+        const lngDetector = new LanguageDetect();
+        language = lngDetector.detect(text, 1);
+
+        return language[0][0];
+    }
+
+
     function renamePdf() {
         fileList = '';
         fileOutput.value = '';
@@ -41,20 +50,23 @@
         pdfFiles.forEach((file) => { //for every file.pdf
             let pdfsPaths = path.join(filePath, file); //concat path with file.pdf
 
-            pdftext.pdftotext(pdfsPaths, function (err, data) { // get text from pdf
+            pdftext.pdftotext(pdfsPaths, (err, data) => { // get text from pdf
                 if (err) {
                     return alert(err);
                 } else {
                     const isinCode = data.match(regularExpIsin)[0]; //find ISIN code inside the pdf file
+                    const language = detectLanguage(data);
 
                     const pdfText = {
                         path: pdfsPaths,
-                        isin: isinCode
+                        isin: isinCode,
+                        language: language
                     }
                     pdfFilesText.push(pdfText);
-                    let newPath = path.join(filePath, `${isinCode}.pdf`);
+                    let newFileName = `${file.replace('.pdf', ' ')}${language} ${isinCode}.pdf`; //add language and isin code to existing file name
+                    let newPath = path.join(filePath, newFileName);
                     fs.renameSync(pdfsPaths, newPath);
-                    fileList += `${isinCode}.pdf\n`;
+                    fileList += `${newFileName}\n`;
                 }
                 fileOutput.value = fileList;
             })
@@ -62,7 +74,7 @@
     }
     function getFolderContent() {
         // passing directoryPath and callback function
-        fs.readdir(filePath, function (err, files) { //files: files in the folder
+        fs.readdir(filePath, (err, files) => { //files: files in the folder
             //handling error
             if (err) {
                 return alert('Unable to scan directory: ' + err);
@@ -86,7 +98,7 @@
 
         }, (folderPath) => {
             if (folderPath === undefined) {
-                return console.log("The path has not been chosen.");
+                return console.log('The path has not been chosen.');
             };
             filePath = folderPath[0];
             console.log(filePath);
