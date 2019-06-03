@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>PDF renamer</title>
+  <link rel="stylesheet" href="photon.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="mainWrapper">
+    <h1>Rename PDFs</h1>
+
+    <form>
+      <div class="form-group">
+        <label>Files</label>
+        <textarea id="fileContents" class="form-control" rows="5" disabled></textarea>
+      </div>
+    </form>
+    <button id="btnOpen" class="btn btn-default">Open folder</button>
+    <button id="generateCsv" class="btn" disabled>Generate list.csv</button>
+    <button id="renamePdf" class="btn" disabled>Rename PDFs</button>
+
+  </div>
+  <script src="class.js"></script>
+  <script>
+    require('./index.js')
+  </script>
+</body>
+
+</html>

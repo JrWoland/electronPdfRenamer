@@ -1,0 +1,15 @@
+button:hover {
+    cursor: pointer;
+}
+
+button:disabled:hover {
+    cursor: not-allowed;
+}
+
+h1 {
+    color: orange;
+}
+
+.mainWrapper {
+    margin: 25px;
+}
