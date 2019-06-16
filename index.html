@@ -2,31 +2,36 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>PDF renamer</title>
-  <link rel="stylesheet" href="photon.min.css">
-  <link rel="stylesheet" href="styles.css">
+   <meta charset="UTF-8">
+   <title>PDF renamer</title>
+   <link rel="stylesheet" href="photon.min.css">
+   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <div class="mainWrapper">
-    <h1>Rename PDFs</h1>
+   <div class="mainWrapper">
+      <h1>Rename PDFs</h1>
 
-    <form>
-      <div class="form-group">
-        <label>Files</label>
-        <textarea id="fileContents" class="form-control" rows="5" disabled></textarea>
+      <form>
+         <div class="form-group">
+            <label>Files</label>
+            <textarea id="fileContents" class="form-control" rows="5" disabled></textarea>
+         </div>
+      </form>
+      <div>
+         Select data to fetch from PDF file:<br>
+         <input type="checkbox" name="isin" id="isin">ISIN<br>
+         <input type="checkbox" name="language" id="language">Language<br>
       </div>
-    </form>
-    <button id="btnOpen" class="btn btn-default">Open folder</button>
-    <button id="generateCsv" class="btn" disabled>Generate list.csv</button>
-    <button id="renamePdf" class="btn" disabled>Rename PDFs</button>
+      <button id="btnOpen" class="btn btn-default">Open folder</button>
+      <button id="renamePdf" class="btn" disabled>Rename PDF</button>
+      <button id="generateCsv" class="btn" disabled>Generate template.csv</button>
 
-  </div>
-  <script src="class.js"></script>
-  <script>
-    require('./index.js')
-  </script>
+   </div>
+   <script src="class.js"></script>
+   <script>
+      require('./index.js')
+   </script>
 </body>
 
 </html>

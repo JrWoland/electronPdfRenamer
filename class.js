@@ -1,5 +1,8 @@
-class Plik {
-    constructor(title) {
-        this.title = `${title}.txt`;
-    }
+class PdfFilesInfo {
+   constructor() {
+      this.fileName = '';
+      this.isin = '';
+      this.language = '';
+      this.path = '';
+   }
 }
